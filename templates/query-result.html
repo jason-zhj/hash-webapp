@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #777;
+        float: left;
+        width: 110px;
+    }
+
+    div.gallerywrong {
+        margin: 5px;
+        border: 2px solid #ff2121;
+        float: left;
+        width: 110px;
+    }
+
+    div.gallery img {
+        width: 100%;
+        height: auto;
+    }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+    </style>
+    <title>ZJD Image Retrieval Test</title>
+</head>
+<body>
+    <h1>Query Result (using {{method}})</h1>
+    <h3><a href="/">Try another one</a></h3>
+    <h3>Query image (Label: {{query_class}})</h3>
+    <img src="/static/{{query_img }}" alt="" style="max-width:300px;max-height:300px">
+    <hr>
+    <h3>Search in domains: {{selected_domains}}</h3>
+    <h3>Precision within hamming radius {{radius}}:  {{overall_precision}}</h3>
+    <h3>Recall within hamming radius {{radius}}:  {{overall_recall}}</h3>
+    <hr>
+    {% for key, value in result_dict.items %}
+        <h3>Images with hamming distance {{ key }}</h3>
+        <h4>Precision: {{ value.precision }}</h4>
+        <h4>Recall: {{ value.recall }}</h4>
+        {% for item in value.list %}
+            {% if item.1 %}
+                <div class="gallery">
+                        <img src="/static/{{ item.0.file_path }}" alt="" style="max-width:100px;max-height:100px">
+                </div>
+            {% else %}
+                <div class="gallerywrong">
+                        <img src="/static/{{ item.0.file_path }}" alt="" style="max-width:100px;max-height:100px">
+                        <div class="desc">{{item.0.label.name}}</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    <p class="clearfix"></p>
+    <hr>
+    {% endfor %}
+</body>
+</html>
