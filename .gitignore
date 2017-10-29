@@ -1,0 +1,14 @@
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+.idea/
+__pycache__
+MANIFEST
+db.sqlite3
+imghash/migrations
+imghash/temp
+*.sqlite3
+
+tfmodels/
+*.sqlite3
